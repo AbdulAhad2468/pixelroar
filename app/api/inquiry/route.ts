@@ -1,7 +1,7 @@
 import {NextRequest,NextResponse} from 'next/server';
 
 const emailPattern=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const allowedServices=new Set(['Content Creation','Website Design & Dev','Branding & Strategy','Paid Advertising','Social Media Management','SEO Services','Other']);
+const allowedServices=new Set(['Branding & strategy','Social media','Content creation','Video & motion','Websites & apps','Growth marketing','Custom digital solutions','Other']);
 const clean=(value:unknown,max:number)=>typeof value==='string'?value.trim().slice(0,max):'';
 
 export async function POST(request:NextRequest){
