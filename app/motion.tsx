@@ -11,7 +11,6 @@ export default function MotionEffects(){
   if(!matchMedia('(pointer:fine)').matches)return()=>observer.disconnect();
 
   const root=document.documentElement;
-  const hero=document.querySelector<HTMLElement>('.hero-scene');
   let frame=0;let px=0;let py=0;
   const move=(event:PointerEvent)=>{
    px=event.clientX;py=event.clientY;
@@ -19,13 +18,12 @@ export default function MotionEffects(){
    frame=requestAnimationFrame(()=>{
     root.style.setProperty('--pointer-x',`${px}px`);
     root.style.setProperty('--pointer-y',`${py}px`);
-    if(hero){const r=hero.getBoundingClientRect();hero.style.setProperty('--hero-ry',`${((px-r.left-r.width/2)/r.width*13).toFixed(2)}deg`);hero.style.setProperty('--hero-rx',`${((r.top+r.height/2-py)/r.height*11).toFixed(2)}deg`)}
     frame=0;
    });
-   const tile=(event.target as Element).closest?.('.project-card,.plan,.process-grid>div,.inquiry-form') as HTMLElement|null;
+   const tile=(event.target as Element).closest?.('.service-row,.project-card,.plan,.process-grid>div,.inquiry-form') as HTMLElement|null;
    if(tile){const r=tile.getBoundingClientRect();tile.style.setProperty('--tile-ry',`${((px-r.left-r.width/2)/r.width*8).toFixed(2)}deg`);tile.style.setProperty('--tile-rx',`${((r.top+r.height/2-py)/r.height*7).toFixed(2)}deg`)}
   };
-  const leave=(event:PointerEvent)=>{const tile=(event.target as Element).closest?.('.project-card,.plan,.process-grid>div,.inquiry-form') as HTMLElement|null;if(tile&&!tile.contains(event.relatedTarget as Node)){tile.style.setProperty('--tile-ry','0deg');tile.style.setProperty('--tile-rx','0deg')}};
+  const leave=(event:PointerEvent)=>{const tile=(event.target as Element).closest?.('.service-row,.project-card,.plan,.process-grid>div,.inquiry-form') as HTMLElement|null;if(tile&&!tile.contains(event.relatedTarget as Node)){tile.style.setProperty('--tile-ry','0deg');tile.style.setProperty('--tile-rx','0deg')}};
   window.addEventListener('pointermove',move,{passive:true});document.addEventListener('pointerout',leave);
   return()=>{observer.disconnect();window.removeEventListener('pointermove',move);document.removeEventListener('pointerout',leave);cancelAnimationFrame(frame)};
  },[]);
